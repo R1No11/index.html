@@ -1,7 +1,400 @@
-</> HTML
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>MERGE</h1>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFB - Two Funding Brothers</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #000; color: #fff; font-family: Arial, sans-serif; }
+
+    .banner-flip-wrapper { background: #050810; border-bottom: 1px solid #1a0a2a; height: 38px; perspective: 1000px; overflow: hidden; }
+    .banner-flip { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; animation: flipBanner 6s ease-in-out infinite; }
+    @keyframes flipBanner {
+      0%   { transform: rotateX(0deg); }
+      40%  { transform: rotateX(0deg); }
+      50%  { transform: rotateX(180deg); }
+      90%  { transform: rotateX(180deg); }
+      100% { transform: rotateX(360deg); }
+    }
+    .banner-front, .banner-back { position: absolute; width: 100%; height: 38px; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #aaa; gap: 20px; background: #050810; }
+    .banner-front b { background: #7b1fa2; color: #fff; padding: 2px 10px; border-radius: 20px; margin-right: 8px; font-size: 11px; }
+    .banner-front a { color: #1a56db; text-decoration: none; font-weight: bold; }
+    .banner-back { transform: rotateX(180deg); gap: 16px; }
+    .banner-back span { color: #777; font-size: 12px; }
+
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 60px; background: rgba(5,8,16,0.97); border-bottom: 1px solid #1a0a2a; position: sticky; top: 0; z-index: 100; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo img { height: 65px; }
+    .nav-sub { font-size: 9px; color: #555; letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 2px; }
+    .nav-links a { color: #999; text-decoration: none; padding: 7px 16px; border-radius: 6px; font-size: 14px; transition: color 0.2s; }
+    .nav-links a:hover { color: #fff; }
+    .nav-right { display: flex; gap: 10px; align-items: center; }
+    .btn-login { color: #999; text-decoration: none; font-size: 14px; padding: 8px 20px; border-radius: 7px; border: 1px solid #1a0a2a; transition: all 0.2s; }
+    .btn-login:hover { border-color: #1a56db; color: #fff; }
+    .btn-funded { background: linear-gradient(135deg, #1a56db, #7b1fa2); color: #fff; text-decoration: none; font-size: 14px; font-weight: bold; padding: 10px 22px; border-radius: 7px; transition: opacity 0.2s; }
+    .btn-funded:hover { opacity: 0.85; }
+
+    .logo-anim { animation: logoPulse 3s ease-in-out infinite; }
+    @keyframes logoPulse {
+      0%   { opacity: 0; transform: scale(0.85); filter: blur(4px); }
+      30%  { opacity: 1; transform: scale(1); filter: blur(0px); }
+      70%  { opacity: 1; transform: scale(1); filter: blur(0px); }
+      100% { opacity: 0; transform: scale(0.85); filter: blur(4px); }
+    }
+    .logo-anim:hover { filter: drop-shadow(0 0 12px rgba(26,86,219,0.8)); }
+
+    .hero { text-align: center; padding: 120px 20px 90px; position: relative; overflow: hidden; background: radial-gradient(ellipse at center, #0a0a3a 0%, #050810 60%, #000000 100%); }
+    .hero::before { content: ''; position: absolute; width: 900px; height: 600px; background: radial-gradient(ellipse, rgba(26,86,219,0.15) 0%, transparent 70%); top: 30%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .hero::after { content: ''; position: absolute; width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(123,31,162,0.10) 0%, transparent 70%); bottom: 0; right: 5%; pointer-events: none; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid #1a0a2a; color: #888; font-size: 12px; padding: 6px 18px; border-radius: 20px; margin-bottom: 28px; letter-spacing: 1px; position: relative; z-index: 1; }
+    .hero-badge::before { content: ''; width: 6px; height: 6px; background: #1a56db; border-radius: 50%; display: inline-block; }
+    .hero h1 { font-size: 72px; font-weight: 900; line-height: 1.05; margin-bottom: 8px; letter-spacing: -2px; position: relative; z-index: 1; }
+    .hero h1 .blue { color: #1a56db; }
+    .hero h1 .purple { color: #7b1fa2; }
+    .hero-sub { font-size: 19px; color: #6a7a9a; margin: 20px auto 38px; max-width: 500px; line-height: 1.7; position: relative; z-index: 1; }
+    .hero-sub strong { color: #fff; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; align-items: center; position: relative; z-index: 1; }
+    .btn-h-main { background: linear-gradient(135deg, #1a56db, #7b1fa2); color: #fff; padding: 16px 36px; border-radius: 8px; font-size: 16px; font-weight: bold; text-decoration: none; transition: opacity 0.2s; }
+    .btn-h-main:hover { opacity: 0.85; }
+    .btn-h-sec { border: 1px solid #1a0a2a; color: #ccc; padding: 16px 36px; border-radius: 8px; font-size: 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; transition: all 0.2s; background: rgba(255,255,255,0.03); }
+    .btn-h-sec:hover { border-color: #1a56db; color: #fff; }
+    .play { width: 24px; height: 24px; background: linear-gradient(135deg, #1a56db, #7b1fa2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; flex-shrink: 0; }
+    .hero-note { margin-top: 24px; font-size: 13px; color: #444; position: relative; z-index: 1; }
+    .hero-note a { color: #1a56db; text-decoration: none; }
+    .trust { margin-top: 34px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; color: #555; position: relative; z-index: 1; }
+    .trust-stars { color: #1a56db; font-size: 16px; letter-spacing: 2px; }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); background: #050810; border-top: 1px solid #1a0a2a; border-bottom: 1px solid #1a0a2a; }
+    .stat { text-align: center; padding: 40px 20px; border-right: 1px solid #1a0a2a; }
+    .stat:last-child { border-right: none; }
+    .stat-label { font-size: 11px; color: #444; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+    .stat-val { font-size: 42px; font-weight: 900; color: #fff; letter-spacing: -1px; }
+    .stat-val span { background: linear-gradient(135deg, #1a56db, #7b1fa2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .section { padding: 90px 60px; max-width: 1100px; margin: 0 auto; }
+    .sec-title { text-align: center; margin-bottom: 55px; }
+    .sec-title h2 { font-size: 46px; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+    .sec-title h2 .blue { color: #1a56db; }
+    .sec-title h2 .purple { color: #7b1fa2; }
+    .sec-title p { color: #6a7a9a; font-size: 17px; }
+
+    .steps { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .step-flip { width: 300px; height: 320px; perspective: 1000px; cursor: pointer; }
+    .step-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.7s ease; }
+    .step-flip:hover .step-inner { transform: rotateY(180deg); }
+    .step-front, .step-back { position: absolute; width: 100%; height: 100%; border-radius: 14px; padding: 36px 24px; -webkit-backface-visibility: hidden; backface-visibility: hidden; border: 1px solid #1a0a2a; }
+    .step-front { background: #05050f; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; transition: border-color 0.3s; }
+    .step-flip:hover .step-front { border-color: #1a56db; }
+    .step-front h3 { font-size: 19px; font-weight: 700; }
+    .step-front p { color: #6a7a9a; font-size: 15px; line-height: 1.7; }
+    .step-num { width: 52px; height: 52px; background: linear-gradient(135deg, #1a56db, #7b1fa2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; color: #fff; }
+    .step-back { background: #05050f; transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; gap: 10px; border-color: #7b1fa2; }
+    .step-back h3 { font-size: 14px; font-weight: 900; color: #1a56db; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; text-align: center; }
+    .step-back ul { list-style: none; }
+    .step-back ul li { display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-bottom: 1px solid #1a0a2a; color: #fff; }
+    .step-back ul li:last-child { border-bottom: none; }
+    .step-back ul li span { color: #6a7a9a; font-size: 13px; }
+    .red-warn { color: #e8002d !important; }
+
+    .plans-wrap { background: #000; padding: 90px 20px; border-top: 1px solid #1a0a2a; border-bottom: 1px solid #1a0a2a; }
+    .plans { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .plan { background: #05050f; border: 1px solid #1a0a2a; border-radius: 14px; padding: 38px 28px; width: 280px; position: relative; transition: all 0.3s; }
+    .plan:hover { border-color: #1a56db; transform: translateY(-5px); }
+    .plan.hot { border-color: #7b1fa2; background: #0a0015; }
+    .plan-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #1a56db, #7b1fa2); color: #fff; font-size: 10px; font-weight: bold; padding: 4px 16px; border-radius: 20px; white-space: nowrap; letter-spacing: 1px; }
+    .plan-tier { font-size: 11px; color: #6a7a9a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+    .plan-cap { font-size: 34px; font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 4px; }
+    .plan-price { font-size: 28px; font-weight: bold; margin: 14px 0; background: linear-gradient(135deg, #1a56db, #7b1fa2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .plan-price span { font-size: 14px; color: #444; -webkit-text-fill-color: #444; }
+    .plan-divider { border: none; border-top: 1px solid #1a0a2a; margin: 18px 0; }
+    .plan ul { list-style: none; }
+    .plan ul li { color: #6a7a9a; font-size: 14px; padding: 8px 0; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #0d0020; }
+    .plan ul li:last-child { border-bottom: none; }
+    .plan ul li::before { content: "✓"; color: #1a56db; font-weight: bold; font-size: 16px; flex-shrink: 0; }
+    .btn-plan { display: block; background: linear-gradient(135deg, #1a56db, #7b1fa2); color: #fff; padding: 14px; border-radius: 8px; font-weight: bold; text-decoration: none; text-align: center; margin-top: 24px; font-size: 15px; transition: opacity 0.2s; }
+    .btn-plan:hover { opacity: 0.85; }
+    .plan:not(.hot) .btn-plan { background: transparent; border: 1px solid #1a0a2a; color: #ccc; }
+    .plan:not(.hot) .btn-plan:hover { border-color: #1a56db; color: #fff; }
+
+    .faq-wrap { padding: 90px 60px; max-width: 800px; margin: 0 auto; }
+    .faq-item { background: #05050f; border: 1px solid #1a0a2a; border-radius: 12px; padding: 24px 28px; margin-bottom: 12px; transition: border-color 0.3s; }
+    .faq-item:hover { border-color: #1a56db; }
+    .faq-item h3 { font-size: 16px; color: #fff; margin-bottom: 10px; display: flex; justify-content: space-between; }
+    .faq-item h3::after { content: "→"; color: #1a56db; }
+    .faq-item p { color: #6a7a9a; font-size: 15px; line-height: 1.7; }
+
+    .cta { padding: 100px 20px; text-align: center; position: relative; overflow: hidden; background: radial-gradient(ellipse at center, #0a0a3a 0%, #050810 60%, #000 100%); }
+    .cta::before { content: ''; position: absolute; width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(26,86,219,0.12) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
+    .cta::after { content: ''; position: absolute; width: 400px; height: 300px; background: radial-gradient(ellipse, rgba(123,31,162,0.10) 0%, transparent 70%); bottom: 0; right: 10%; pointer-events: none; }
+    .cta h2 { font-size: 54px; font-weight: 900; letter-spacing: -2px; margin-bottom: 16px; position: relative; z-index: 1; }
+    .cta h2 .blue { color: #1a56db; }
+    .cta h2 .purple { color: #7b1fa2; }
+    .cta p { color: #6a7a9a; font-size: 17px; margin-bottom: 36px; position: relative; z-index: 1; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; position: relative; z-index: 1; }
+
+    footer { background: #000; border-top: 1px solid #1a0a2a; padding: 30px 60px; display: flex; justify-content: space-between; align-items: center; color: #333; font-size: 13px; }
+    footer span { background: linear-gradient(135deg, #1a56db, #7b1fa2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+</head>
+<body>
+
+  <div class="banner-flip-wrapper">
+    <div class="banner-flip">
+      <div class="banner-front">
+        <b>NEW</b> TFB 1-Step Challenge — available now! <a href="#plans">Start now →</a>
+      </div>
+      <div class="banner-back">
+        <span>🎯 Target: 10%</span>
+        <span>📅 Min. Days: 7</span>
+        <span>📉 Daily DD: 5%</span>
+        <span>📊 Max DD: 10%</span>
+        <span>⚡ Leverage: 1:100</span>
+        <span>⏳ Period: 365 Days</span>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-logo">
+      <img src="tt.jpg" alt="TFB Logo" class="logo-anim">
+      <div class="nav-sub">Two Funding Brothers</div>
+    </div>
+    <div class="nav-links">
+      <a href="#how">TFB Challenge</a>
+      <a href="#plans">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="btn-login">Log In</a>
+      <a href="#plans" class="btn-funded">Get Funded</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-badge">Modern Prop Trading — Since 2026</div>
+    <h1>The New Standard in<br><span class="blue">Trader</span> <span class="purple">Funding.</span></h1>
+    <p class="hero-sub">Prove your skills and get access to capital up to <strong>$200,000</strong>. Keep up to 80% of your profits.</p>
+    <div class="hero-btns">
+      <a href="#plans" class="btn-h-main">Get Funded</a>
+      <a href="#how" class="btn-h-sec">
+        <div class="play">▶</div>
+        How It Works
+      </a>
+    </div>
+    <p class="hero-note">Not ready? <a href="#">Start with a Free Trial.</a></p>
+    <div class="trust">
+      <span class="trust-stars">★★★★★</span>
+      <strong style="color:#fff">Excellent</strong>
+      <span>· 2,400+ reviews · Traders from 140+ countries</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-label">Max Capital</div>
+      <div class="stat-val">$<span id="stat1">200</span>K</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Paid To Traders</div>
+      <div class="stat-val">$<span id="stat2">2</span>M+</div>
+    </div>
+    <div class="stat">
+      <div class="stat-label">Active Traders</div>
+      <div class="stat-val"><span id="stat3">50</span>K+</div>
+    </div>
+  </div>
+
+  <div class="section" id="how">
+    <div class="sec-title">
+      <h2>How Does <span class="blue">TFB</span> <span class="purple">Work?</span></h2>
+      <p>3 simple steps to become a funded trader</p>
+    </div>
+    <div class="steps">
+      <div class="step-flip">
+        <div class="step-inner">
+          <div class="step-front">
+            <div class="step-num">1</div>
+            <h3>TFB Challenge</h3>
+            <p>Hit a 10% profit target on a demo account while following our risk management rules.</p>
+          </div>
+          <div class="step-back">
+            <h3>Challenge Rules</h3>
+            <ul>
+              <li><span>Target</span> 10%</li>
+              <li><span>Min. Days</span> 7</li>
+              <li><span>Daily DD</span> <b class="red-warn">5%</b></li>
+              <li><span>Max DD</span> <b class="red-warn">10%</b></li>
+              <li><span>Leverage</span> 1:100</li>
+              <li><span>Period</span> 365 Days</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="step-flip">
+        <div class="step-inner">
+          <div class="step-front">
+            <div class="step-num">2</div>
+            <h3>Verification</h3>
+            <p>Confirm your consistency with a 5% profit target in the verification phase.</p>
+          </div>
+          <div class="step-back">
+            <h3>Verification Rules</h3>
+            <ul>
+              <li><span>Target</span> 5%</li>
+              <li><span>Min. Days</span> 7</li>
+              <li><span>Daily DD</span> <b class="red-warn">5%</b></li>
+              <li><span>Max DD</span> <b class="red-warn">10%</b></li>
+              <li><span>Leverage</span> 1:100</li>
+              <li><span>Period</span> 365 Days</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="step-flip">
+        <div class="step-inner">
+          <div class="step-front">
+            <div class="step-num">3</div>
+            <h3>Funded Account</h3>
+            <p>Receive your funded account and keep 80% of all profits you generate.</p>
+          </div>
+          <div class="step-back">
+            <h3>Funded Rules</h3>
+            <ul>
+              <li><span>Profit Split</span> 80%</li>
+              <li><span>Payouts</span> Every 14 days</li>
+              <li><span>Daily DD</span> <b class="red-warn">5%</b></li>
+              <li><span>Max DD</span> <b class="red-warn">10%</b></li>
+              <li><span>Leverage</span> 1:100</li>
+              <li><span>Scaling</span> Up to $200K</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="plans-wrap" id="plans">
+    <div class="sec-title">
+      <h2>Choose Your <span class="blue">Plan</span></h2>
+      <p>Select the account size that fits your trading style</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-tier">Starter</div>
+        <div class="plan-cap">$10,000</div>
+        <div class="plan-price">€59 <span>/ one time</span></div>
+        <hr class="plan-divider">
+        <ul>
+          <li>Profit target 10%</li>
+          <li>Max drawdown 10%</li>
+          <li>Profit split 80%</li>
+          <li>Unlimited time</li>
+        </ul>
+        <a href="#" class="btn-plan">Start Now</a>
+      </div>
+      <div class="plan hot">
+        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-tier">Pro</div>
+        <div class="plan-cap">$50,000</div>
+        <div class="plan-price">€129 <span>/ one time</span></div>
+        <hr class="plan-divider">
+        <ul>
+          <li>Profit target 10%</li>
+          <li>Max drawdown 10%</li>
+          <li>Profit split 85%</li>
+          <li>Unlimited time</li>
+        </ul>
+        <a href="#" class="btn-plan">Start Now</a>
+      </div>
+      <div class="plan">
+        <div class="plan-tier">Advanced</div>
+        <div class="plan-cap">$100,000</div>
+        <div class="plan-price">€189 <span>/ one time</span></div>
+        <hr class="plan-divider">
+        <ul>
+          <li>Profit target 10%</li>
+          <li>Max drawdown 10%</li>
+          <li>Profit split 88%</li>
+          <li>Unlimited time</li>
+        </ul>
+        <a href="#" class="btn-plan">Start Now</a>
+      </div>
+      <div class="plan">
+        <div class="plan-tier">Elite</div>
+        <div class="plan-cap">$200,000</div>
+        <div class="plan-price">€249 <span>/ one time</span></div>
+        <hr class="plan-divider">
+        <ul>
+          <li>Profit target 10%</li>
+          <li>Max drawdown 10%</li>
+          <li>Profit split 90%</li>
+          <li>Unlimited time</li>
+        </ul>
+        <a href="#" class="btn-plan">Start Now</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-wrap" id="faq">
+    <div class="sec-title">
+      <h2>Frequently Asked <span class="purple">Questions</span></h2>
+    </div>
+    <div class="faq-item">
+      <h3>What is the TFB Challenge?</h3>
+      <p>The TFB Challenge is a 2-phase evaluation process where you prove your trading skills to receive a funded account with real capital.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much time do I have?</h3>
+      <p>Unlimited time — complete the challenge at your own pace, as long as you follow the risk management rules.</p>
+    </div>
+    <div class="faq-item">
+      <h3>When do I receive my profit payouts?</h3>
+      <p>Payouts are processed every 14 days, directly to your bank account or via cryptocurrency.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is the challenge fee refundable?</h3>
+      <p>Yes! On your first payout from the funded account, the challenge fee is fully refunded.</p>
+    </div>
+  </div>
+
+  <div class="cta" id="contact">
+    <h2>Ready to <span class="blue">Get</span> <span class="purple">Funded?</span></h2>
+    <p>Join thousands of traders earning with TFB every day.</p>
+    <div class="cta-btns">
+      <a href="#plans" class="btn-h-main">Start the Challenge</a>
+      <a href="mailto:support@tfb.com" class="btn-h-sec">Contact Us</a>
+    </div>
+  </div>
+
+  <footer>
+    <div>© 2026 <span>Two Funding Brothers (TFB)</span>. All rights reserved.</div>
+    <div>Trading involves risk. Trade responsibly.</div>
+  </footer>
+
+  <script>
+    function animateNumber(id, target, duration) {
+      let start = 0;
+      let element = document.getElementById(id);
+      let increment = target / (duration / 16);
+      let timer = setInterval(() => {
+        start += increment;
+        if (start >= target) {
+          start = target;
+          clearInterval(timer);
+        }
+        element.textContent = Math.floor(start);
+      }, 16);
+    }
+
+    window.addEventListener('load', () => {
+      animateNumber('stat1', 200, 2000);
+      animateNumber('stat2', 2, 2000);
+      animateNumber('stat3', 50, 2000);
+    });
+  </script>
+
+</body>
 </html>
