@@ -833,7 +833,7 @@ async function answerQ(modId, optIdx){
   let mentorText = baseExp;
   if(ANTHROPIC_KEY){
     try{
-      const res = await fetch('/api/chat',{
+      const res = await fetch('/.netlify/functions/chat',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,
@@ -935,7 +935,7 @@ async function sendMsg(){
   addTyping();
   setAiriState('thinking');
   try{
-    const res = await fetch('/api/chat',{
+    const res = await fetch('/.netlify/functions/chat',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
