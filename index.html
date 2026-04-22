@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="ro">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -833,9 +833,9 @@ async function answerQ(modId, optIdx){
   let mentorText = baseExp;
   if(ANTHROPIC_KEY){
     try{
-      const res = await fetch('https://api.anthropic.com/v1/messages',{
+      const res = await fetch('/api/chat',{
         method:'POST',
-        headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+        headers:{'Content-Type':'application/json'},
         body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:200,
           system:'Esti AIRI, asistentul AI de trading bazat pe strategia SMC/ICT a lui Rares Gabriel. Raspunzi in romana, concis, max 3 propozitii. Esti direct, practic, incurajatoare. Adauga un insight practic extra specific strategiei.',
           messages:[{role:'user',content:`Studentul a raspuns ${correct?'CORECT':'GRESIT'} la: "${m.quiz.q}". Raspuns ales: "${m.quiz.opts[optIdx]}". Explicatia: "${baseExp}". Comentariu scurt mentor cu insight extra.`}]})
@@ -935,9 +935,9 @@ async function sendMsg(){
   addTyping();
   setAiriState('thinking');
   try{
-    const res = await fetch('https://api.anthropic.com/v1/messages',{
+    const res = await fetch('/api/chat',{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-api-key':ANTHROPIC_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:400,
         tools:[{type:'web_search_20250305',name:'web_search'}],
